@@ -4,7 +4,6 @@ DROP DATABASE IF EXISTS alphatrack;
 CREATE DATABASE alphatrack;
 USE alphatrack;
 
-
 CREATE TABLE User (
     user_id     INT AUTO_INCREMENT PRIMARY KEY,
     first_name  VARCHAR(50) NOT NULL,
@@ -206,100 +205,3 @@ CREATE TABLE Backup (
     restore_tested_at DATETIME
 );
 
--- sample data generated from ai
-
-INSERT INTO User (first_name, last_name, email, status) VALUES
-('Bobby', 'James', 'bobby.james@firm.com', 'active'),
-('Mike', 'Gasly', 'mike.gasly@espn.com', 'active'),
-('Gregory', 'Hilton', 'gregory.hilton@alphatrack.com', 'active'),
-('James', 'Carter', 'james.carter@firm.com', 'active');
-
-INSERT INTO Role (role_name, role_description, is_active) VALUES
-('Portfolio Analyst', 'Can view and analyze portfolios', TRUE),
-('Retail Investor', 'Can manage personal portfolio', TRUE),
-('System Admin', 'Full system access', TRUE),
-('Financial Advisor', 'Can manage client portfolios', TRUE);
-
-INSERT INTO User_Role (user_id, role_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4);
-
-INSERT INTO Asset (ticker, asset_name, asset_type, current_price) VALUES
-('AAPL', 'Apple Inc.', 'Equity', 185.20),
-('MSFT', 'Microsoft Corporation', 'Equity', 374.00),
-('SPY', 'SPDR S&P 500 ETF', 'ETF', 480.50),
-('BND', 'Vanguard Bond ETF', 'Bond', 72.30);
-
-INSERT INTO Price_History (asset_id, date, closing_price) VALUES
-(1, '2024-01-01', 182.50),
-(1, '2024-01-02', 183.75),
-(2, '2024-01-01', 370.00),
-(2, '2024-01-02', 372.50);
-
-INSERT INTO Benchmark (benchmark_name, ticker) VALUES
-('S&P 500', 'SPY'),
-('NASDAQ 100', 'QQQ');
-
-INSERT INTO Benchmark_Price_History (benchmark_id, date, closing_price) VALUES
-(1, '2024-01-01', 478.00),
-(1, '2024-01-02', 479.50),
-(2, '2024-01-01', 410.00);
-
-INSERT INTO Portfolio (user_id, benchmark_id, portfolio_name, total_value) VALUES
-(1, 1, 'Tech Growth Fund', 150000.00),
-(2, 1, 'Mike Personal Portfolio', 25000.00),
-(4, 2, 'Client A Portfolio', 200000.00);
-
-INSERT INTO Holding (portfolio_id, asset_id, quantity, avg_cost, current_value, allocation_percent, weight) VALUES
-(1, 1, 100.00, 170.00, 18520.00, 12.35, 0.1235),
-(1, 2, 50.00, 350.00, 18700.00, 12.47, 0.1247),
-(2, 1, 20.00, 180.00, 3704.00, 14.82, 0.1482);
-
-INSERT INTO Watchlist (user_id, watchlist_name) VALUES
-(1, 'Tech Concentration'),
-(2, 'Mike Watchlist');
-
-INSERT INTO Watchlist_Asset (watchlist_id, asset_id) VALUES
-(1, 1),
-(1, 2),
-(2, 3);
-
-INSERT INTO Risk_Metrics (portfolio_id, sharpe_ratio, volatility, max_drawdown, date_range_start, date_range_end) VALUES
-(1, 1.42, 0.183, -0.221, '2023-01-01', '2023-12-31'),
-(2, 0.98, 0.215, -0.180, '2023-01-01', '2023-12-31');
-
-INSERT INTO `Transaction` (portfolio_id, asset_id, transaction_type, shares, price_per_share) VALUES
-(2, 1, 'BUY', 20.00, 180.00),
-(2, 3, 'BUY', 10.00, 475.00),
-(2, 1, 'SELL', 5.00, 185.00);
-
-INSERT INTO Performance_History (portfolio_id, date, portfolio_value, gain_loss) VALUES
-(2, '2024-01-01', 24000.00, -1000.00),
-(2, '2024-02-01', 25500.00, 1500.00),
-(2, '2024-03-01', 25000.00, -500.00);
-
-INSERT INTO Client (user_id, name, email, account_status, risk_tolerance) VALUES
-(4, 'Sarah Lee', 'sarah.lee@firm.com', 'active', 'moderate'),
-(4, 'Tom Reyes', 'tom.reyes@firm.com', 'active', 'aggressive');
-
-INSERT INTO Risk_Profile (client_id, risk_level, threshold_min, threshold_max) VALUES
-(1, 'moderate', 0.05, 0.15),
-(2, 'aggressive', 0.10, 0.25);
-
-INSERT INTO Alert (client_id, alert_type, message) VALUES
-(1, 'risk_breach', 'Portfolio exceeded risk threshold'),
-(2, 'rebalance', 'Portfolio drift detected');
-
-INSERT INTO Report (client_id, report_type, summary) VALUES
-(1, 'monthly', 'Monthly performance summary for Sarah Lee'),
-(2, 'quarterly', 'Quarterly review for Tom Reyes');
-
-INSERT INTO Activity_Log (user_id, event_type, event_category, event_description, ip_address) VALUES
-(3, 'LOGIN', 'AUTH', 'Admin user logged in', '192.168.1.1'),
-(3, 'USER_DEACTIVATED', 'USER_MGMT', 'Deactivated inactive user account', '192.168.1.1');
-
-INSERT INTO Backup (backup_name, backup_status, storage_location, backup_size_gb) VALUES
-('backup_2026_03_29', 'complete', '/backups/2026/03/29', 2.40),
-('backup_2026_03_22', 'complete', '/backups/2026/03/22', 2.10);
