@@ -1,4 +1,4 @@
-from backend.rest_entry import create_app
+from AlphaTrack.api.backend.rest_entry import create_app
 
 app = create_app()
 
