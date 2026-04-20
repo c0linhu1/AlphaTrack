@@ -76,6 +76,22 @@ def ml_model_mgmt_nav():
         "pages/21_ML_Model_Mgmt.py", label="ML Model Management", icon="🏢"
     )
 
+# ---- Role: financial_advisor ------------------------------------------------
+
+def advisor_home_nav():
+    st.sidebar.page_link("pages/30_Advisor_Home.py", label="Advisor Home", icon="💼")
+
+
+def client_overview_nav():
+    st.sidebar.page_link("pages/31_Client_Overview.py", label="Client Overview", icon="📊")
+
+
+def risk_rebalancing_nav():
+    st.sidebar.page_link("pages/32_Risk_Rebalancing.py", label="Risk & Rebalancing", icon="⚖️")
+
+
+def client_management_nav():
+    st.sidebar.page_link("pages/33_Client_Management.py", label="Client Management", icon="👥")
 
 # ---- Sidebar assembly -------------------------------------------------------
 
@@ -114,6 +130,12 @@ def SideBarLinks(show_home=False):
         if st.session_state["role"] == "administrator":
             admin_home_nav()
             ml_model_mgmt_nav()
+
+        if st.session_state["role"] == "financial_advisor":
+            advisor_home_nav()
+            client_overview_nav()
+            risk_rebalancing_nav()
+            client_management_nav()
 
     # About link appears at the bottom for all roles
     about_page_nav()
