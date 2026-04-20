@@ -76,6 +76,6 @@ if st.button('Act as James, a Financial Advisor',
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'financial_advisor'
     st.session_state['first_name'] = 'James'
-    st.session_state['user_id'] = 4
+    st.session_state['user_id'] = 32
     logger.info("Logging in as Financial Advisor Persona")
     st.switch_page('pages/30_Advisor_Home.py')
