@@ -70,3 +70,12 @@ if st.button('Act as System Administrator',
     st.session_state['role'] = 'administrator'
     st.session_state['first_name'] = 'SysAdmin'
     st.switch_page('pages/20_Admin_Home.py')
+
+if st.button('Act as James Carter, a Financial Advisor',
+             type='primary', use_container_width=True):
+    st.session_state['authenticated'] = True
+    st.session_state['role'] = 'financial_advisor'
+    st.session_state['first_name'] = 'James'
+    st.session_state['user_id'] = 4
+    logger.info("Logging in as Financial Advisor Persona")
+    st.switch_page('pages/30_Advisor_Home.py')
