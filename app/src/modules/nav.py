@@ -13,59 +13,65 @@ def about_page_nav():
     st.sidebar.page_link("pages/40_About.py", label="About", icon="🧠")
 
 
-# ---- Role: Portfolio Analyst
- 
+# ---- Role: Portfolio Analyst 
+
 def analyst_home_nav():
     st.sidebar.page_link(
         "pages/00_Analyst_Home.py",
         label="Analyst Home",
         icon="📈"
     )
- 
- 
+
+
 def risk_dashboard_nav():
     st.sidebar.page_link(
-        "pages/01_Risk_Dashboard.py",
+        "pages/01_Risk_DashBoard.py",
         label="Risk Dashboard",
-        icon="📊")
- 
- 
+        icon="📊"
+    )
+
+
 def correlation_watchlist_nav():
     st.sidebar.page_link(
         "pages/02_Correlation_Watchlists.py",
         label="Correlation & Watchlists",
-        icon="🧩")
- 
- 
-# ---- Role: Retail Investor
- 
+        icon="🧩"
+    )
+
+
+# ---- Role: Retail Investor 
+
 def investor_home_nav():
     st.sidebar.page_link(
         "pages/10_Investor_Home.py",
         label="Investor Home",
-        icon="💰")
- 
- 
+        icon="💰"
+    )
+
+
 def portfolio_dashboard_nav():
     st.sidebar.page_link(
         "pages/11_Portfolio_Dashboard.py",
         label="Portfolio Dashboard",
-        icon="📉")
- 
- 
+        icon="📉"
+    )
+
+
 def holdings_nav():
     st.sidebar.page_link(
         "pages/12_Holdings_Performance.py",
-        label="Holdings & Performance", 
-        icon="📋")
- 
- 
+        label="Holdings & Performance",
+        icon="📋"
+    )
+
+
 def manage_holdings_nav():
     st.sidebar.page_link(
         "pages/13_Manage_Holdings.py",
         label="Manage Holdings",
-        icon="✏️")
- 
+        icon="✏️"
+    )
+
 
 # ---- Role: Administrator 
 
@@ -84,12 +90,14 @@ def access_control_nav():
         icon="🔐"
     )
 
+
 def system_monitoring_nav():
     st.sidebar.page_link(
         "pages/22_System_Monitoring.py",
         label="System Monitoring",
         icon="🛠️"
     )
+
 
 # ---- Role: Financial Advisor 
 
