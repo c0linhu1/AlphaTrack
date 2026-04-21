@@ -71,6 +71,50 @@ def deactivate_user(user_id):
         cursor.close()
 
 
+# Reactivate a user
+# [Gregory-3]
+@admin.route("/users/<int:user_id>/reactivate", methods=["PUT"])
+def reactivate_user(user_id):
+    cursor = get_db().cursor(dictionary=True)
+    try:
+        cursor.execute("""
+            UPDATE User
+            SET status = 'active', deactivated_at = NULL
+            WHERE user_id = %s
+        """, (user_id,))
+        get_db().commit()
+
+        if cursor.rowcount == 0:
+            return jsonify({"error": "User not found"}), 404
+
+        return jsonify({"message": "User reactivated"}), 200
+    except Error as e:
+        current_app.logger.error(f"Error: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        cursor.close()
+
+
+# Delete a user
+# [Gregory-3]
+@admin.route("/users/<int:user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    cursor = get_db().cursor(dictionary=True)
+    try:
+        cursor.execute("DELETE FROM User WHERE user_id = %s", (user_id,))
+        get_db().commit()
+
+        if cursor.rowcount == 0:
+            return jsonify({"error": "User not found"}), 404
+
+        return jsonify({"message": "User deleted"}), 200
+    except Error as e:
+        current_app.logger.error(f"Error: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        cursor.close()
+
+
 # Get all roles
 # [Gregory-1]
 @admin.route("/roles", methods=["GET"])
@@ -113,6 +157,26 @@ def create_role():
         cursor.close()
 
 
+# Delete a role
+# [Gregory-1]
+@admin.route("/roles/<int:role_id>", methods=["DELETE"])
+def delete_role(role_id):
+    cursor = get_db().cursor(dictionary=True)
+    try:
+        cursor.execute("DELETE FROM Role WHERE role_id = %s", (role_id,))
+        get_db().commit()
+
+        if cursor.rowcount == 0:
+            return jsonify({"error": "Role not found"}), 404
+
+        return jsonify({"message": "Role deleted"}), 200
+    except Error as e:
+        current_app.logger.error(f"Error: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        cursor.close()
+
+
 # Update or assign a user's role
 # [Gregory-2]
 @admin.route("/users/<int:user_id>/roles", methods=["PUT"])
@@ -124,26 +188,22 @@ def update_user_role(user_id):
         if "role_id" not in data:
             return jsonify({"error": "Missing role_id"}), 400
 
-        # First, make sure the user exists
         cursor.execute("SELECT user_id FROM User WHERE user_id = %s", (user_id,))
         user_exists = cursor.fetchone()
 
         if not user_exists:
             return jsonify({"error": "User not found"}), 404
 
-        # Make sure the role exists too
         cursor.execute("SELECT role_id FROM Role WHERE role_id = %s", (data["role_id"],))
         role_exists = cursor.fetchone()
 
         if not role_exists:
             return jsonify({"error": "Role not found"}), 404
 
-        # Check whether this user already has a role assignment
         cursor.execute("SELECT user_role_id FROM User_Role WHERE user_id = %s", (user_id,))
         existing_assignment = cursor.fetchone()
 
         if existing_assignment:
-            # If the mapping already exists, update it
             cursor.execute("""
                 UPDATE User_Role
                 SET role_id = %s
@@ -151,9 +211,7 @@ def update_user_role(user_id):
             """, (data["role_id"], user_id))
             get_db().commit()
             return jsonify({"message": "User role updated"}), 200
-
         else:
-            # If no mapping exists yet, create one
             cursor.execute("""
                 INSERT INTO User_Role (user_id, role_id)
                 VALUES (%s, %s)

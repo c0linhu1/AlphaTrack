@@ -58,7 +58,6 @@ if st.button("Load All Roles", type='primary', use_container_width=True):
 st.write("## Create a New User")
 
 with st.form("create_user_form"):
-    # Basic user details required by the backend
     first_name = st.text_input("First Name")
     last_name = st.text_input("Last Name")
     email = st.text_input("Email")
@@ -85,11 +84,31 @@ with st.form("create_user_form"):
             st.error(f"Could not create user: {e}")
 
 
+# Delete a user
+st.write("## Delete a User")
+
+with st.form("delete_user_form"):
+    user_id_to_delete = st.number_input("User ID to Delete", min_value=1, step=1)
+
+    delete_user_submitted = st.form_submit_button("Delete User")
+
+    if delete_user_submitted:
+        try:
+            response = requests.delete(
+                f"{API_BASE_URL}/a/users/{int(user_id_to_delete)}",
+                timeout=10
+            )
+            response.raise_for_status()
+            st.success("User deleted successfully.")
+            st.json(response.json())
+        except requests.exceptions.RequestException as e:
+            st.error(f"Could not delete user: {e}")
+
+
 # Create a new role
 st.write("## Create a New Role")
 
 with st.form("create_role_form"):
-    # Role name is required and description is optional
     role_name = st.text_input("Role Name")
     role_description = st.text_input("Role Description")
 
@@ -114,11 +133,31 @@ with st.form("create_role_form"):
             st.error(f"Could not create role: {e}")
 
 
+# Delete a role
+st.write("## Delete a Role")
+
+with st.form("delete_role_form"):
+    role_id_to_delete = st.number_input("Role ID to Delete", min_value=1, step=1)
+
+    delete_role_submitted = st.form_submit_button("Delete Role")
+
+    if delete_role_submitted:
+        try:
+            response = requests.delete(
+                f"{API_BASE_URL}/a/roles/{int(role_id_to_delete)}",
+                timeout=10
+            )
+            response.raise_for_status()
+            st.success("Role deleted successfully.")
+            st.json(response.json())
+        except requests.exceptions.RequestException as e:
+            st.error(f"Could not delete role: {e}")
+
+
 # Update a user's role
 st.write("## Update a User's Role")
 
 with st.form("update_role_form"):
-    # The backend route expects a user_id in the path and a role_id in the JSON body
     user_id_for_role_update = st.number_input("User ID", min_value=1, step=1)
     new_role_id = st.number_input("New Role ID", min_value=1, step=1)
 
@@ -146,7 +185,6 @@ with st.form("update_role_form"):
 st.write("## Deactivate a User")
 
 with st.form("deactivate_user_form"):
-    # This route marks the user as inactive
     user_id_to_deactivate = st.number_input("User ID to Deactivate", min_value=1, step=1)
 
     deactivate_user_submitted = st.form_submit_button("Deactivate User")
@@ -162,3 +200,24 @@ with st.form("deactivate_user_form"):
             st.json(response.json())
         except requests.exceptions.RequestException as e:
             st.error(f"Could not deactivate user: {e}")
+
+
+# Reactivate a user
+st.write("## Reactivate a User")
+
+with st.form("reactivate_user_form"):
+    user_id_to_reactivate = st.number_input("User ID to Reactivate", min_value=1, step=1)
+
+    reactivate_user_submitted = st.form_submit_button("Reactivate User")
+
+    if reactivate_user_submitted:
+        try:
+            response = requests.put(
+                f"{API_BASE_URL}/a/users/{int(user_id_to_reactivate)}/reactivate",
+                timeout=10
+            )
+            response.raise_for_status()
+            st.success("User reactivated successfully.")
+            st.json(response.json())
+        except requests.exceptions.RequestException as e:
+            st.error(f"Could not reactivate user: {e}")
