@@ -90,6 +90,12 @@ def access_control_nav():
         icon="🔐"
     )
 
+def system_monitoring_nav():
+    st.sidebar.page_link(
+        "pages/22_System_Monitoring.py",
+        label="System Monitoring",
+        icon="🛠️"
+    )
 
 # ---- Role: Financial Advisor 
 
@@ -160,6 +166,7 @@ def SideBarLinks(show_home=False):
         if st.session_state["role"] == "administrator":
             admin_home_nav()
             access_control_nav()
+            system_monitoring_nav()
 
         if st.session_state["role"] == "financial_advisor":
             advisor_home_nav()
