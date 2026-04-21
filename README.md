@@ -25,20 +25,17 @@ Tech Stack
 
 
 
-Project Structure
+## Project Structure
 
-AlphaTrack/
-│
-├── api/                # Flask backend (routes, DB connection, blueprints)
-├── app/                # Streamlit frontend
-│   └── src/
-│       ├── pages/      # Role-based UI pages
-│       └── modules/    # Navigation logic
-├── database-files/     # SQL schema + mock data
-├── docker-compose.yml  # Container orchestration
-└── README.md
-
-
+- **AlphaTrack/**
+  - **api/** — Flask backend (routes, DB connection, blueprints)
+  - **app/** — Streamlit frontend  
+    - **src/**
+      - **pages/** — Role-based UI pages  
+      - **modules/** — Navigation logic  
+  - **database-files/** — SQL schema + mock data  
+  - **docker-compose.yml** — Container orchestration  
+  - **README.md**
 
 
 Setup Instructions
@@ -169,7 +166,7 @@ Resources
 	•	Flask Docs: https://flask.palletsprojects.com
 	•	Docker Docs: https://docs.docker.com
 
-⸻
+
 
 Submission Checklist
 	•	Docker runs successfully
