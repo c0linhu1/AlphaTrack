@@ -1,19 +1,47 @@
 # `database-files` Folder
 
-The MySQL server that is running in the db container is set up so that when the container is *created*, any `.sql` files in the `database-files` folder are automatically run.  Loosely speaking, the `.sql` files are run in "alphabetical" order.  So if your database schema is broken into a few files, it is easiest to rename them with a number at the beginning so they'll be run in the correct order.  So, something like `01_db.sql`, `02_db.sql` and so on. 
+This folder contains all SQL files used to initialize the AlphaTrack database.
 
-If you make changes to any of the files in the `database-files/` folder AFTER the db container is started, you'll have to delete the container and re-create it for the SQL files to be re-executed.  **Note:** simply stopping and re-starting the db container will not re-run the files. 
+When the MySQL container is created, all `.sql` files in this folder are automatically executed in alphabetical order. For this reason, files are prefixed with numbers (e.g., `01_`, `02_`) to ensure the correct execution order.
 
-If you are in your sandbox repo, do the following:
+Typical usage:
+- `01_AlphaTrack_ddl.sql` → creates the database schema  
+- `02_AlphaTrack_data.sql` → inserts mock data  
+
+
+
+## Important Behavior
+
+SQL files are **only executed when the database container is first created**.
+
+If you make changes to any SQL files after the container has already been created, those changes will **NOT** automatically apply.
+
+Simply restarting the container will NOT reload the SQL files.
+
+
+
+## How to Reinitialize the Database
+
+To apply changes to the schema or data, you must delete and recreate the database container.
+
+Run:
 
 ```bash
-docker compose -f sandbox.yaml down db -v && docker compose -f sandbox.yaml up db
+docker compose down db -v
+docker compose up db
 ```
 
-If you are working with your team repository, do the following
+### What this does:
+- Removes the existing database container  
+- Deletes the associated MySQL volume  
+- Recreates the database from scratch  
+- Re-runs all SQL files in `database-files/`  
 
-```bash
-docker compose down db -v && docker compose up db
-```
 
-The `-v` flag will also delete the volume associated with MySQL, which is necessary to rerun the sql files. 
+
+## Notes
+
+- The `-v` flag is required to remove the stored database data  
+- Without it, old data will persist and SQL files will not rerun  
+- This process ensures a clean and consistent database state  
+
