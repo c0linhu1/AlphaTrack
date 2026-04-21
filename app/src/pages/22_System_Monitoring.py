@@ -111,6 +111,30 @@ with st.form("delete_backup_form"):
                 st.error(f"Could not delete backup: {e}")
 
 
+# Portfolio lookup
+st.write("## View Portfolio Details")
+st.write(
+    "Enter a portfolio ID to inspect the current portfolio record. "
+    "This is helpful before and after running a validation check."
+)
+
+with st.form("view_portfolio_form"):
+    portfolio_lookup_id = st.number_input("Portfolio ID to View", min_value=1, step=1)
+    load_portfolio_submitted = st.form_submit_button("Load Portfolio")
+
+    if load_portfolio_submitted:
+        # This assumes your backend has a GET route for a single portfolio
+        portfolio_data = get_data(f"/p/portfolios/{int(portfolio_lookup_id)}")
+
+        if portfolio_data is not None:
+            if isinstance(portfolio_data, list):
+                st.dataframe(portfolio_data, use_container_width=True)
+            elif isinstance(portfolio_data, dict):
+                st.json(portfolio_data)
+            else:
+                st.write(portfolio_data)
+
+
 # Portfolio validation
 st.write("## Recalculate Portfolio Total Value")
 st.write(
@@ -129,7 +153,26 @@ with st.form("recalculate_portfolio_form"):
                 timeout=10
             )
             response.raise_for_status()
+
             st.success("Portfolio total recalculated successfully.")
             st.json(response.json())
+
+            # Try to fetch the updated portfolio immediately after recalculation
+            st.write("### Updated Portfolio Record")
+
+            updated_portfolio = get_data(f"/p/portfolios/{int(portfolio_id)}")
+            if updated_portfolio is not None:
+                if isinstance(updated_portfolio, list):
+                    st.dataframe(updated_portfolio, use_container_width=True)
+                elif isinstance(updated_portfolio, dict):
+                    st.json(updated_portfolio)
+                else:
+                    st.write(updated_portfolio)
+            else:
+                st.info(
+                    "The recalculation completed, but the portfolio details could not be loaded. "
+                    "If needed, use the portfolio lookup section above to verify the updated total."
+                )
+
         except requests.exceptions.RequestException as e:
             st.error(f"Could not recalculate portfolio total: {e}")
