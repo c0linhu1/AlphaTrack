@@ -13,65 +13,59 @@ def about_page_nav():
     st.sidebar.page_link("pages/30_About.py", label="About", icon="🧠")
 
 
-# ---- Role: Portfolio Analyst 
-
+# ---- Role: Portfolio Analyst
+ 
 def analyst_home_nav():
     st.sidebar.page_link(
-        "pages/00_Pol_Strat_Home.py",
+        "pages/00_Analyst_Home.py",
         label="Analyst Home",
         icon="📈"
     )
-
-
+ 
+ 
 def risk_dashboard_nav():
     st.sidebar.page_link(
-        "pages/01_World_Bank_Viz.py",
+        "pages/01_Risk_Dashboard.py",
         label="Risk Dashboard",
-        icon="📊"
-    )
-
-
+        icon="📊")
+ 
+ 
 def correlation_watchlist_nav():
     st.sidebar.page_link(
-        "pages/02_Map_Demo.py",
+        "pages/02_Correlation_Watchlists.py",
         label="Correlation & Watchlists",
-        icon="🧩"
-    )
-
-
-# ---- Role: Retail Investor 
-
+        icon="🧩")
+ 
+ 
+# ---- Role: Retail Investor
+ 
 def investor_home_nav():
     st.sidebar.page_link(
-        "pages/10_USAID_Worker_Home.py",
+        "pages/10_Investor_Home.py",
         label="Investor Home",
-        icon="💰"
-    )
-
-
+        icon="💰")
+ 
+ 
 def portfolio_dashboard_nav():
     st.sidebar.page_link(
-        "pages/11_Prediction.py",
+        "pages/11_Portfolio_Dashboard.py",
         label="Portfolio Dashboard",
-        icon="📉"
-    )
-
-
+        icon="📉")
+ 
+ 
 def holdings_nav():
     st.sidebar.page_link(
-        "pages/12_API_Test.py",
-        label="Holdings & Performance",
-        icon="📋"
-    )
-
-
+        "pages/12_Holdings_Performance.py",
+        label="Holdings & Performance", 
+        icon="📋")
+ 
+ 
 def manage_holdings_nav():
     st.sidebar.page_link(
-        "pages/13_Classification.py",
+        "pages/13_Manage_Holdings.py",
         label="Manage Holdings",
-        icon="✏️"
-    )
-
+        icon="✏️")
+ 
 
 # ---- Role: Administrator 
 

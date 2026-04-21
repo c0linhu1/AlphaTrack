@@ -1,6 +1,6 @@
-###########################################
+
 # AlphaTrack main landing / mock login page
-###########################################
+
 
 import logging
 import streamlit as st
@@ -37,7 +37,7 @@ portfolio_analyst_user = st.selectbox(
     index=None,
     placeholder="Select a portfolio analyst"
 )
-
+ 
 if st.button(
     "Log in as Portfolio Analyst",
     type="primary",
@@ -51,9 +51,9 @@ if st.button(
         st.session_state['first_name'] = 'Bobby'
         st.session_state['user_id'] = 1
         logger.info("Logging in as Portfolio Analyst")
-        st.switch_page('pages/00_Pol_Strat_Home.py')
-
-
+        st.switch_page('pages/00_Analyst_Home.py')
+ 
+ 
 # Retail Investor login
 retail_investor_user = st.selectbox(
     "Retail Investor",
@@ -61,7 +61,7 @@ retail_investor_user = st.selectbox(
     index=None,
     placeholder="Select a retail investor"
 )
-
+ 
 if st.button(
     "Log in as Retail Investor",
     type="primary",
@@ -75,7 +75,7 @@ if st.button(
         st.session_state['first_name'] = 'Mike'
         st.session_state['user_id'] = 2
         logger.info("Logging in as Retail Investor")
-        st.switch_page('pages/10_USAID_Worker_Home.py')
+        st.switch_page('pages/10_Investor_Home.py')
 
 
 # System Administrator login
