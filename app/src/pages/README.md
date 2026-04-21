@@ -1,104 +1,131 @@
+# AlphaTrack — Pages Directory
 
-## `pages` Folder
+This folder contains all Streamlit pages that make up the AlphaTrack 
+application's front-end user interface. Each page is tied to one of 
+four user personas and represents a specific feature or workflow within 
+the platform.
 
-This folder contains all of the Streamlit pages that make up the AlphaTrack application. Each page represents a specific feature or workflow tied to one of our four user personas:
+---
 
-- Portfolio Analyst (Bobby)
-- Retail Investor (Mike)
-- System Administrator (Gregory)
-- Financial Advisor (James)
+## User Personas
 
-Navigation between these pages is controlled through the sidebar (`modules/nav.py`), which dynamically displays different pages depending on the user's role after logging in.
+| Persona | Name | Role |
+|---|---|---|
+| Portfolio Analyst | Bobby | Analyzes portfolio risk and performance metrics |
+| Retail Investor | Mike | Manages and monitors personal investment portfolio |
+| System Administrator | Gregory | Manages users, roles, and system health |
+| Financial Advisor | James | Oversees multiple client portfolios and risk profiles |
 
+---
 
+## Navigation & Role-Based Access
 
-## How Pages Are Organized
+Navigation is controlled dynamically through `modules/nav.py`. When a 
+user logs in from the Home page, their role is stored in 
+`st.session_state`. The sidebar then renders only the pages relevant 
+to that role, ensuring each persona sees only their own functionality.
 
-Streamlit automatically orders pages based on the numeric prefixes in each filename. We use this system to group pages by persona:
+Pages are ordered using numeric filename prefixes, which Streamlit uses 
+to determine sidebar ordering:
 
-- `00–02` → Portfolio Analyst
-- `10–13` → Retail Investor
-- `20–22` → System Administrator
-- `30–33` → Financial Advisor
-- `40` → About page
+| Prefix Range | Persona |
+|---|---|
+| `00–02` | Portfolio Analyst (Bobby) |
+| `10–13` | Retail Investor (Mike) |
+| `20–22` | System Administrator (Gregory) |
+| `30–33` | Financial Advisor (James) |
+| `40` | General / About |
 
-This structure keeps the app organized and ensures that each user only sees functionality relevant to their role.
-
-
+---
 
 ## Page Breakdown
 
-### Portfolio Analyst (Bobby)
-These pages focus on portfolio analytics, risk insights, and asset relationships.
+### Portfolio Analyst — Bobby (`00–02`)
+Pages focused on portfolio analytics, risk metrics, and asset 
+correlation insights.
 
-- **00_Analyst_Home.py**  
-  Landing page for the Portfolio Analyst.
+| File | Description |
+|---|---|
+| `00_Analyst_Home.py` | Landing page for the Portfolio Analyst persona |
+| `01_Risk_Dashboard.py` | Displays portfolio-level risk metrics including volatility and overall risk scores |
+| `02_Correlation_Watchlists.py` | Shows asset correlation matrices and allows users to create and manage watchlists |
 
-- **01_Risk_DashBoard.py**  
-  Displays portfolio-level risk metrics such as volatility and overall risk scores.
+**User Stories Covered:** View risk metrics dashboard, visualize 
+correlation matrix, save custom watchlists.
 
-- **02_Correlation_Watchlists.py**  
-  Shows asset correlation matrices and allows users to create and manage watchlists.
+---
 
+### Retail Investor — Mike (`10–13`)
+Pages focused on personal portfolio tracking, performance monitoring, 
+and holdings management.
 
+| File | Description |
+|---|---|
+| `10_Investor_Home.py` | Landing page for the Retail Investor persona |
+| `11_Portfolio_Dashboard.py` | Overview of portfolio value, total return, performance chart, and holdings breakdown |
+| `12_Holdings_Performance.py` | Detailed view of individual holdings with gain/loss metrics |
+| `13_Manage_Holdings.py` | Add, edit, or remove holdings from the portfolio |
 
-### Retail Investor (Mike)
-These pages focus on personal portfolio tracking and management.
+**User Stories Covered:** View all investments in one dashboard, track 
+gains and losses over time, compare individual stocks, add/edit/remove 
+holdings.
 
-- **10_Investor_Home.py**  
-  Landing page for the Retail Investor.
+**API Routes Used:**
+- `GET /i/portfolios/{id}/holdings`
+- `GET /i/portfolios/{id}/performance`
+- `POST /i/portfolios/{id}/holdings`
+- `PUT /i/holdings/{portfolioId}/{assetId}`
+- `DELETE /i/holdings/{portfolioId}/{assetId}`
 
-- **11_Portfolio_Dashboard.py**  
-  Provides an overview of portfolio performance and key metrics.
+---
 
-- **12_Holdings_Performance.py**  
-  Displays detailed holdings and performance breakdowns.
+### System Administrator — Gregory (`20–22`)
+Pages focused on platform maintenance, user and role management, and 
+system monitoring.
 
-- **13_Manage_Holdings.py**  
-  Allows users to add, update, or remove holdings from their portfolio.
+| File | Description |
+|---|---|
+| `20_Admin_Home.py` | Landing page for the System Administrator persona |
+| `21_ML_Model_Mgmt.py` | Repurposed as an access control page for managing users and roles |
+| `22_System_Monitoring.py` | Displays system activity logs, backup records, and data integrity tools |
 
+**User Stories Covered:** Add/update user roles and permissions, 
+deactivate users, monitor system activity logs, manage backups.
 
+---
 
-### System Administrator (Gregory)
-These pages focus on system maintenance, user management, and monitoring.
+### Financial Advisor — James (`30–33`)
+Pages focused on client portfolio oversight, risk profiling, and 
+advisory workflow management.
 
-- **20_Admin_Home.py**  
-  Landing page for the System Administrator.
+| File | Description |
+|---|---|
+| `30_Advisor_Home.py` | Landing page for the Financial Advisor persona |
+| `31_Client_Overview.py` | Displays all clients and a high-level summary of their portfolios |
+| `32_Risk_Rebalancing.py` | Shows individual client risk profiles and rebalancing suggestions |
+| `33_Client_Management.py` | Allows the advisor to add, update, or close client accounts |
 
-- **21_ML_Model_Mgmt.py**  
-  Repurposed as an access control page for managing users and roles.
+**User Stories Covered:** View all client portfolios in one dashboard, 
+generate performance reports, set and monitor risk thresholds, 
+add/remove client accounts.
 
-- **22_System_Monitoring.py**  
-  Displays system activity logs, backups, and data integrity tools.
+---
 
+### General (`40`)
 
+| File | Description |
+|---|---|
+| `40_About.py` | Overview of the AlphaTrack application, its purpose, and the tech stack |
 
-### Financial Advisor (James)
-These pages support managing multiple client portfolios and advisory workflows.
+---
 
-- **30_Advisor_Home.py**  
-  Landing page for the Financial Advisor.
+## Technical Notes
 
-- **31_Client_Overview.py**  
-  Displays all clients and their portfolios.
-
-- **32_Risk_Rebalancing.py**  
-  Shows risk profiles and provides rebalancing insights.
-
-- **33_Client_Management.py**  
-  Allows the advisor to manage client accounts and portfolios.
-
-
-
-### General
-
-- **40_About.py**  
-  Provides an overview of the AlphaTrack application and its purpose.
-
-
-
-## Notes
-
-- All pages rely on backend API routes defined in the `/api` folder.
-- Role-based access is enforced using `st.session_state` and dynamic sidebar navigation.
-- Several pages were adapted from the original project template and repurposed for AlphaTrack functionality.
+- All pages communicate with the Flask REST API running at 
+`http://web-api:4000` inside the Docker network.
+- Role-based access is enforced using `st.session_state['role']` 
+set at login on `Home.py`.
+- The sidebar is rendered by calling `SideBarLinks()` from 
+`modules/nav.py` at the top of every page.
+- Pages were built using the Streamlit framework and follow the 
+project's three-tier architecture: MySQL → Flask API → Streamlit UI.
