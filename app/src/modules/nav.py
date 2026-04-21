@@ -1,11 +1,9 @@
-# Idea borrowed from https://github.com/fsmosca/sample-streamlit-authenticator
-
-# This file has functions to add links to the left sidebar based on the user's role.
+# This file controls the sidebar navigation shown to each user role.
 
 import streamlit as st
 
 
-# ---- General ----------------------------------------------------------------
+# ---- General 
 
 def home_nav():
     st.sidebar.page_link("Home.py", label="Home", icon="🏠")
@@ -15,96 +13,130 @@ def about_page_nav():
     st.sidebar.page_link("pages/30_About.py", label="About", icon="🧠")
 
 
-# ---- Role: pol_strat_advisor ------------------------------------------------
+# ---- Role: Portfolio Analyst 
 
-def pol_strat_home_nav():
+def analyst_home_nav():
     st.sidebar.page_link(
-        "pages/00_Pol_Strat_Home.py", label="Political Strategist Home", icon="👤"
+        "pages/00_Pol_Strat_Home.py",
+        label="Analyst Home",
+        icon="📈"
     )
 
 
-def world_bank_viz_nav():
+def risk_dashboard_nav():
     st.sidebar.page_link(
-        "pages/01_World_Bank_Viz.py", label="World Bank Visualization", icon="🏦"
+        "pages/01_World_Bank_Viz.py",
+        label="Risk Dashboard",
+        icon="📊"
     )
 
 
-def map_demo_nav():
-    st.sidebar.page_link("pages/02_Map_Demo.py", label="Map Demonstration", icon="🗺️")
-
-
-# ---- Role: usaid_worker -----------------------------------------------------
-
-def usaid_worker_home_nav():
+def correlation_watchlist_nav():
     st.sidebar.page_link(
-        "pages/10_USAID_Worker_Home.py", label="USAID Worker Home", icon="🏠"
+        "pages/02_Map_Demo.py",
+        label="Correlation & Watchlists",
+        icon="🧩"
     )
 
 
-def ngo_directory_nav():
-    st.sidebar.page_link("pages/14_NGO_Directory.py", label="NGO Directory", icon="📁")
+# ---- Role: Retail Investor 
 
-
-def add_ngo_nav():
-    st.sidebar.page_link("pages/15_Add_NGO.py", label="Add New NGO", icon="➕")
-
-
-def prediction_nav():
+def investor_home_nav():
     st.sidebar.page_link(
-        "pages/11_Prediction.py", label="Regression Prediction", icon="📈"
+        "pages/10_USAID_Worker_Home.py",
+        label="Investor Home",
+        icon="💰"
     )
 
 
-def api_test_nav():
-    st.sidebar.page_link("pages/12_API_Test.py", label="Test the API", icon="🛜")
-
-
-def classification_nav():
+def portfolio_dashboard_nav():
     st.sidebar.page_link(
-        "pages/13_Classification.py", label="Classification Demo", icon="🌺"
+        "pages/11_Prediction.py",
+        label="Portfolio Dashboard",
+        icon="📉"
     )
 
 
-# ---- Role: administrator ----------------------------------------------------
+def holdings_nav():
+    st.sidebar.page_link(
+        "pages/12_API_Test.py",
+        label="Holdings & Performance",
+        icon="📋"
+    )
+
+
+def manage_holdings_nav():
+    st.sidebar.page_link(
+        "pages/13_Classification.py",
+        label="Manage Holdings",
+        icon="✏️"
+    )
+
+
+# ---- Role: Administrator 
 
 def admin_home_nav():
-    st.sidebar.page_link("pages/20_Admin_Home.py", label="System Admin", icon="🖥️")
-
-
-def ml_model_mgmt_nav():
     st.sidebar.page_link(
-        "pages/21_ML_Model_Mgmt.py", label="ML Model Management", icon="🏢"
+        "pages/20_Admin_Home.py",
+        label="Admin Home",
+        icon="🖥️"
     )
 
-# ---- Role: financial_advisor ------------------------------------------------
+
+def access_control_nav():
+    st.sidebar.page_link(
+        "pages/21_ML_Model_Mgmt.py",
+        label="Access Control",
+        icon="🔐"
+    )
+
+
+# ---- Role: Financial Advisor 
 
 def advisor_home_nav():
-    st.sidebar.page_link("pages/30_Advisor_Home.py", label="Advisor Home", icon="💼")
+    st.sidebar.page_link(
+        "pages/30_Advisor_Home.py",
+        label="Advisor Home",
+        icon="💼"
+    )
 
 
 def client_overview_nav():
-    st.sidebar.page_link("pages/31_Client_Overview.py", label="Client Overview", icon="📊")
+    st.sidebar.page_link(
+        "pages/31_Client_Overview.py",
+        label="Client Overview",
+        icon="📊"
+    )
 
 
 def risk_rebalancing_nav():
-    st.sidebar.page_link("pages/32_Risk_Rebalancing.py", label="Risk & Rebalancing", icon="⚖️")
+    st.sidebar.page_link(
+        "pages/32_Risk_Rebalancing.py",
+        label="Risk & Rebalancing",
+        icon="⚖️"
+    )
 
 
 def client_management_nav():
-    st.sidebar.page_link("pages/33_Client_Management.py", label="Client Management", icon="👥")
+    st.sidebar.page_link(
+        "pages/33_Client_Management.py",
+        label="Client Management",
+        icon="👥"
+    )
 
-# ---- Sidebar assembly -------------------------------------------------------
+
+# ---- Sidebar assembly 
 
 def SideBarLinks(show_home=False):
     """
-    Renders sidebar navigation links based on the logged-in user's role.
-    The role is stored in st.session_state when the user logs in on Home.py.
+    Render sidebar links based on the current user's role.
+    The role is stored in st.session_state after the user selects a persona on Home.py.
     """
 
-    # Logo appears at the top of the sidebar on every page
+    # Show the AlphaTrack logo on every page
     st.sidebar.image("assets/logo.png", width=150)
 
-    # If no one is logged in, send them to the Home (login) page
+    # If the user is not authenticated, send them back to Home
     if "authenticated" not in st.session_state:
         st.session_state.authenticated = False
         st.switch_page("Home.py")
@@ -114,22 +146,20 @@ def SideBarLinks(show_home=False):
 
     if st.session_state["authenticated"]:
 
-        if st.session_state["role"] == "pol_strat_advisor":
-            pol_strat_home_nav()
-            world_bank_viz_nav()
-            map_demo_nav()
+        if st.session_state["role"] == "portfolio_analyst":
+            analyst_home_nav()
+            risk_dashboard_nav()
+            correlation_watchlist_nav()
 
-        if st.session_state["role"] == "usaid_worker":
-            usaid_worker_home_nav()
-            ngo_directory_nav()
-            add_ngo_nav()
-            prediction_nav()
-            api_test_nav()
-            classification_nav()
+        if st.session_state["role"] == "retail_investor":
+            investor_home_nav()
+            portfolio_dashboard_nav()
+            holdings_nav()
+            manage_holdings_nav()
 
         if st.session_state["role"] == "administrator":
             admin_home_nav()
-            ml_model_mgmt_nav()
+            access_control_nav()
 
         if st.session_state["role"] == "financial_advisor":
             advisor_home_nav()
@@ -137,11 +167,16 @@ def SideBarLinks(show_home=False):
             risk_rebalancing_nav()
             client_management_nav()
 
-    # About link appears at the bottom for all roles
+    # Always show the About page
     about_page_nav()
 
+    # Logout button for authenticated users
     if st.session_state["authenticated"]:
         if st.sidebar.button("Logout"):
             del st.session_state["role"]
             del st.session_state["authenticated"]
+            if "first_name" in st.session_state:
+                del st.session_state["first_name"]
+            if "user_id" in st.session_state:
+                del st.session_state["user_id"]
             st.switch_page("Home.py")

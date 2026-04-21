@@ -1,81 +1,126 @@
-##################################################
-# This is the main/entry-point file for the
-# sample application for your project
-##################################################
+###########################################
+# AlphaTrack main landing / mock login page
+###########################################
 
-# Set up basic logging infrastructure
 import logging
-logging.basicConfig(format='%(filename)s:%(lineno)s:%(levelname)s -- %(message)s', level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-# import the main streamlit library as well
-# as SideBarLinks function from src/modules folder
 import streamlit as st
 from modules.nav import SideBarLinks
 
-# streamlit supports regular and wide layout (how the controls
-# are organized/displayed on the screen).
+# Set up logging
+logging.basicConfig(
+    format='%(filename)s:%(lineno)s:%(levelname)s -- %(message)s',
+    level=logging.INFO
+)
+logger = logging.getLogger(__name__)
+
+# Use the wide layout
 st.set_page_config(layout='wide')
 
-# If a user is at this page, we assume they are not
-# authenticated.  So we change the 'authenticated' value
-# in the streamlit session_state to false.
+# Visiting this page means the user is not currently logged in
 st.session_state['authenticated'] = False
 
-# Use the SideBarLinks function from src/modules/nav.py to control
-# the links displayed on the left-side panel.
-# IMPORTANT: ensure src/.streamlit/config.toml sets
-# showSidebarNavigation = false in the [client] section
+# Show sidebar navigation
 SideBarLinks(show_home=True)
 
-# ***************************************************
-#    The major content of this page
-# ***************************************************
+# Page content
+logger.info("Loading AlphaTrack Home page")
 
-logger.info("Loading the Home page of the app")
-st.title('CS 3200 Project Template')
-st.write('#### Hi! As which user would you like to log in?')
+st.title("AlphaTrack")
+st.write("#### Portfolio tracking and analytics for analysts, investors, administrators, and advisors.")
+st.write("Select a sample user below to enter the app as that persona.")
 
-# For each of the user personas for which we are implementing
-# functionality, we put a button on the screen that the user
-# can click to MIMIC logging in as that mock user.
 
-if st.button("Act as John, a Political Strategy Advisor",
-             type='primary',
-             use_container_width=True):
-    # when user clicks the button, they are now considered authenticated
-    st.session_state['authenticated'] = True
-    # we set the role of the current user
-    st.session_state['role'] = 'pol_strat_advisor'
-    # we add the first name of the user (so it can be displayed on
-    # subsequent pages).
-    st.session_state['first_name'] = 'John'
-    # finally, we ask streamlit to switch to another page, in this case, the
-    # landing page for this particular user type
-    logger.info("Logging in as Political Strategy Advisor Persona")
-    st.switch_page('pages/00_Pol_Strat_Home.py')
+# Portfolio Analyst login
+portfolio_analyst_user = st.selectbox(
+    "Portfolio Analyst",
+    options=["Bobby James"],
+    index=None,
+    placeholder="Select a portfolio analyst"
+)
 
-if st.button('Act as Mohammad, a USAID Worker',
-             type='primary',
-             use_container_width=True):
-    st.session_state['authenticated'] = True
-    st.session_state['role'] = 'usaid_worker'
-    st.session_state['first_name'] = 'Mohammad'
-    st.switch_page('pages/10_USAID_Worker_Home.py')
+if st.button(
+    "Log in as Portfolio Analyst",
+    type="primary",
+    use_container_width=True
+):
+    if portfolio_analyst_user is None:
+        st.warning("Please select a portfolio analyst first.")
+    else:
+        st.session_state['authenticated'] = True
+        st.session_state['role'] = 'portfolio_analyst'
+        st.session_state['first_name'] = 'Bobby'
+        st.session_state['user_id'] = 1
+        logger.info("Logging in as Portfolio Analyst")
+        st.switch_page('pages/00_Pol_Strat_Home.py')
 
-if st.button('Act as System Administrator',
-             type='primary',
-             use_container_width=True):
-    st.session_state['authenticated'] = True
-    st.session_state['role'] = 'administrator'
-    st.session_state['first_name'] = 'SysAdmin'
-    st.switch_page('pages/20_Admin_Home.py')
 
-if st.button('Act as James, a Financial Advisor',
-             type='primary', use_container_width=True):
-    st.session_state['authenticated'] = True
-    st.session_state['role'] = 'financial_advisor'
-    st.session_state['first_name'] = 'James'
-    st.session_state['user_id'] = 32
-    logger.info("Logging in as Financial Advisor Persona")
-    st.switch_page('pages/30_Advisor_Home.py')
+# Retail Investor login
+retail_investor_user = st.selectbox(
+    "Retail Investor",
+    options=["Mike Gasly"],
+    index=None,
+    placeholder="Select a retail investor"
+)
+
+if st.button(
+    "Log in as Retail Investor",
+    type="primary",
+    use_container_width=True
+):
+    if retail_investor_user is None:
+        st.warning("Please select a retail investor first.")
+    else:
+        st.session_state['authenticated'] = True
+        st.session_state['role'] = 'retail_investor'
+        st.session_state['first_name'] = 'Mike'
+        st.session_state['user_id'] = 2
+        logger.info("Logging in as Retail Investor")
+        st.switch_page('pages/10_USAID_Worker_Home.py')
+
+
+# System Administrator login
+admin_user = st.selectbox(
+    "System Administrator",
+    options=["Gregory Hilton"],
+    index=None,
+    placeholder="Select a system administrator"
+)
+
+if st.button(
+    "Log in as System Administrator",
+    type="primary",
+    use_container_width=True
+):
+    if admin_user is None:
+        st.warning("Please select a system administrator first.")
+    else:
+        st.session_state['authenticated'] = True
+        st.session_state['role'] = 'administrator'
+        st.session_state['first_name'] = 'Gregory'
+        st.session_state['user_id'] = 3
+        logger.info("Logging in as System Administrator")
+        st.switch_page('pages/20_Admin_Home.py')
+
+
+# Financial Advisor login
+advisor_user = st.selectbox(
+    "Financial Advisor",
+    options=["James Carter"],
+    index=None,
+    placeholder="Select a financial advisor"
+)
+
+if st.button(
+    "Log in as Financial Advisor",
+    type="primary",
+    use_container_width=True
+):
+    if advisor_user is None:
+        st.warning("Please select a financial advisor first.")
+    else:
+        st.session_state['authenticated'] = True
+        st.session_state['role'] = 'financial_advisor'
+        st.session_state['first_name'] = 'James'
+        st.session_state['user_id'] = 4
+        logger.info("Logging in as Financial Advisor")
+        st.switch_page('pages/30_Advisor_Home.py')
