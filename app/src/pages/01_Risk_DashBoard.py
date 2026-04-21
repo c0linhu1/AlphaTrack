@@ -17,6 +17,9 @@ portfolios = requests.get(f"{API}/p/portfolios/{user_id}").json()
 names = {p["portfolio_id"]: p["portfolio_name"] for p in portfolios}
 selected = st.selectbox("Portfolio", options=list(names.keys()), format_func=lambda x: names[x])
 
+if selected is None:
+    st.stop()
+
 # show risk metrics
 metrics = requests.get(f"{API}/p/portfolios/{selected}/risk-metrics").json()
 if metrics:
