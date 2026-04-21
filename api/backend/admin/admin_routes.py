@@ -335,3 +335,30 @@ def recalculate_portfolio(portfolio_id):
         return jsonify({"error": str(e)}), 500
     finally:
         cursor.close()
+        
+# Get all active users with their assigned roles
+@admin.route("/users/access", methods=["GET"])
+def get_users_with_roles():
+    cursor = get_db().cursor(dictionary=True)
+    try:
+        cursor.execute("""
+            SELECT
+                u.user_id,
+                u.first_name,
+                u.last_name,
+                u.email,
+                u.status,
+                r.role_id,
+                r.role_name
+            FROM User u
+            LEFT JOIN User_Role ur ON u.user_id = ur.user_id
+            LEFT JOIN Role r ON ur.role_id = r.role_id
+            WHERE u.status = 'active'
+            ORDER BY r.role_name, u.last_name, u.first_name
+        """)
+        return jsonify(cursor.fetchall()), 200
+    except Error as e:
+        current_app.logger.error(f"Error: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        cursor.close()
