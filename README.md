@@ -149,8 +149,8 @@ A full demo of the application can be found here:
 👥 Team Members
 	•	Devaj Desai
 	•	Colin Hui
-	•	Henry Wonsiewicz
-	•	Max 
+	•	Henry Wansiewicz
+	•	Max Kurdimov
 
 
 
