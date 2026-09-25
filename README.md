@@ -165,13 +165,3 @@ Resources
 	•	Streamlit Docs: https://docs.streamlit.io
 	•	Flask Docs: https://flask.palletsprojects.com
 	•	Docker Docs: https://docs.docker.com
-
-
-
-Submission Checklist
-	•	Docker runs successfully
-	•	Database initializes with mock data
-	•	API routes function correctly
-	•	Frontend interacts with backend
-	•	README is complete and professional
-	•	Demo video recorded and linked
